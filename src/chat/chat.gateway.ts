@@ -31,7 +31,7 @@ import {
     //   // Optional: cleanup or broadcast offline
     // }
   
-    // @UseGuards(WsJwtGuard)
+    @UseGuards(WsJwtGuard)
     @SubscribeMessage('joinChat')
     async handleJoin(
       @MessageBody() dto: any,
