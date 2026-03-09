@@ -5,6 +5,7 @@ import {
   ManyToOne,
   OneToMany,
   CreateDateColumn,
+  PrimaryColumn,
 } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
 import { Message } from './message.entity';
@@ -17,7 +18,7 @@ export enum SessionStatus {
 
 @Entity()
 export class ChatSession {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryColumn()
   id: string;
 
   @ManyToOne(() => User, (user) => user.sessions, { onDelete: 'CASCADE' })
