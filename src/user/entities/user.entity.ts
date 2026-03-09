@@ -29,7 +29,7 @@ export class User {
   encrypted?: string;
 
   @Column({ nullable: true })
-  iv?: Buffer;
+  iv?: string;
 
   @Column({ nullable: true })
   authTag?: string;

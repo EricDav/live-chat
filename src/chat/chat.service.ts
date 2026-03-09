@@ -126,7 +126,7 @@ export class ChatService {
     await this.userRepo.update({
       email: plainText
     }, {
-      iv,
+      iv: iv.toString('hex'),
       encrypted,
       authTag
     });
