@@ -39,6 +39,7 @@ import {
     ) {
       const user = client.data.id; // from JWT guard
       const email = await this.chatService.decrypt(user);
+      console.log(email, 'Email.........');
 
   
       const session = await this.chatService.getOrCreateActiveSession(shortid(), email, dto.name);
@@ -56,7 +57,7 @@ import {
       });
     }
   
-    @UseGuards(WsJwtGuard)
+    // @UseGuards(WsJwtGuard)
     @SubscribeMessage('sendMessage')
     async handleMessage(
       @MessageBody() dto: any,
@@ -73,7 +74,7 @@ import {
       this.server.to(dto.sessionId).emit('newMessage', message);
     }
   
-    @UseGuards(WsJwtGuard)
+    // @UseGuards(WsJwtGuard)
     @SubscribeMessage('adminJoinAll')
     async handleAdminJoin(@ConnectedSocket() client: Socket) {
       const user = client.data.user;
@@ -85,7 +86,7 @@ import {
       client.emit('activeSessions', activeSessions);
     }
   
-    @UseGuards(WsJwtGuard)
+    // @UseGuards(WsJwtGuard)
     @SubscribeMessage('closeSession')
     async handleClose(
       @MessageBody() dto: { sessionId: string },
@@ -119,7 +120,7 @@ import {
       // ── Admin-only ────────────────────────────────────────────────
     
     
-      @UseGuards(WsJwtGuard)
+      // @UseGuards(WsJwtGuard)
       @SubscribeMessage('closeSession')
       async handleCloseSession(
         @MessageBody() { sessionId }: { sessionId: string },
