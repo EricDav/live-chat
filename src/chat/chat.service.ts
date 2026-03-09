@@ -43,6 +43,7 @@ export class ChatService {
 
     if (!user) {
       await this.userRepo.insert({
+        id: userId,
         email,
         name: name || email.split('@')[0],
         role: 'USER' as Role,

@@ -13,6 +13,7 @@ import {
   import { UseGuards } from '@nestjs/common';
   import { WsJwtGuard } from 'src/common/guards/ws-jwt.guard';
   import { ChatService } from './chat.service';
+  import * as shortid from 'shortid';
 //   import { SendMessageDto } from './dto/send-message.dto';
 //   import { JoinChatDto } from './dto/join-chat.dto';
   
@@ -30,15 +31,17 @@ import {
     //   // Optional: cleanup or broadcast offline
     // }
   
-    @UseGuards(WsJwtGuard)
+    // @UseGuards(WsJwtGuard)
     @SubscribeMessage('joinChat')
     async handleJoin(
       @MessageBody() dto: any,
       @ConnectedSocket() client: Socket,
     ) {
-      const user = client.data.user; // from JWT guard
+      const user = client.data.id; // from JWT guard
+      const email = await this.chatService.decrypt(user);
+
   
-      const session = await this.chatService.getOrCreateActiveSession(user.sub, dto.email, dto.name);
+      const session = await this.chatService.getOrCreateActiveSession(shortid(), email, dto.name);
   
       client.join(session.id);
   

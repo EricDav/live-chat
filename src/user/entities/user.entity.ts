@@ -5,6 +5,7 @@ import {
   OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
+  PrimaryColumn,
 } from 'typeorm';
 import { ChatSession } from '../../chat/entities/chat.entity';
 import { Message } from '../../chat/entities/message.entity';
@@ -16,7 +17,7 @@ export enum Role {
 
 @Entity('users')
 export class User {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn()
   id: number;
 
   @Column({ unique: true })
