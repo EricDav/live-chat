@@ -21,4 +21,9 @@ export class ChatController {
     return this.chatService.encrypt(data);
   }
 
+  @Get('/sessions')
+  async getAllActiveSessions() {
+    return this.chatService.getAllActiveSessions();
+  }
+
 }
