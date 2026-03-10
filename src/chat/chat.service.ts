@@ -81,16 +81,10 @@ export class ChatService {
       }
     })
 
-    const message = this.messageRepo.create({
+    await this.messageRepo.save({
       id: shortid(),
       content,
       senderId: user.id  as any,
-    });
-
-    return this.messageRepo.save({
-      id: shortid(),
-      content,
-      senderId: senderId  as any,
     });
   }
 
