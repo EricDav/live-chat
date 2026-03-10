@@ -91,7 +91,10 @@ export class ChatService {
       senderId: user.id  as any,
     });
 
-    return message;
+    return {
+      ...message,
+      role: user.role
+    };
   }
 
   async getSessionMessages(sessionId: string): Promise<Message[]> {
