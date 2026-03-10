@@ -83,6 +83,7 @@ export class ChatService {
 
     const message = await this.messageRepo.save({
       id: shortid(),
+      sessionId: session.id,
       content,
       senderId: user.id  as any,
     });
@@ -171,5 +172,17 @@ export class ChatService {
     decrypted += decipher.final('utf8');
 
     return decrypted;
+  }
+
+  async fetchUsers() {
+    try {
+      const users = await this.userRepo.find({});
+
+      return {
+        data:  users
+      }
+    } catch(err) {
+      
+    }
   }
 }

@@ -93,9 +93,9 @@ import {
   
     // @UseGuards(WsJwtGuard)
     @SubscribeMessage('adminJoinAll')
-    async handleAdminJoin(@ConnectedSocket() client: Socket) {
-      const user = client.data.user;
-      if (user.role !== 'ADMIN') throw new Error('Forbidden');
+    async handleAdminJoin(@ConnectedSocket() client: Socket, @MessageBody() dto: any,) {
+      // const user = client.data.user;
+      // if (user.role !== 'ADMIN') throw new Error('Forbidden');
   
       client.join('admins');
   
