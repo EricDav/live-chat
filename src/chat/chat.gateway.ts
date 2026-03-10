@@ -49,7 +49,7 @@ import {
       @MessageBody() dto: any,
       @ConnectedSocket() client: Socket,
     ) {
-      console.log(client.data, 'Client Data.....');
+      console.log(client.data, 'Client Data.....', dto);
       const user = client.data.id; // from JWT guard
       const email = await this.chatService.decrypt(user);
       console.log(email, 'Email.........');
