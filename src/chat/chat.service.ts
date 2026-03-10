@@ -66,7 +66,7 @@ export class ChatService {
     sessionId: string,
     senderId: string,
     content: string,
-  ): Promise<Message> {
+  ): Promise<any> {
     console.log('SenderID', senderId, '===>>>>')
     const session = await this.sessionRepo.findOne({
       where: { id: sessionId },
@@ -81,11 +81,13 @@ export class ChatService {
       }
     })
 
-    await this.messageRepo.save({
+    const message = await this.messageRepo.save({
       id: shortid(),
       content,
       senderId: user.id  as any,
     });
+
+    return message;
   }
 
   async getSessionMessages(sessionId: string): Promise<Message[]> {
