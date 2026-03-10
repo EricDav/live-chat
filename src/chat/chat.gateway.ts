@@ -89,9 +89,9 @@ import {
       );
   
       this.server.to(dto.sessionId).emit('newMessage', message);
-      
+
       // ADD THIS LINE: This broadcasts the message to all connected admins
-      this.server.to('admins').emit('newMessage', message);
+      // this.server.to('admins').emit('newMessage', message);
     }
   
     // @UseGuards(WsJwtGuard)
