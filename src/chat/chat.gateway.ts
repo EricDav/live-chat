@@ -80,7 +80,8 @@ import {
       @ConnectedSocket() client: Socket,
     ) {
       const user = client.data.user;
-  
+      console.log(dto, 'DTO');
+      console.log(client, 'CLIENT')
       const message = await this.chatService.createMessage(
         dto.sessionId,
         user.sub,
