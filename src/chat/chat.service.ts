@@ -79,7 +79,9 @@ export class ChatService {
       where: {
         encrypted: senderId
       }
-    })
+    });
+
+    console.log(session, '=====>>>>>>>>', 'SESSION');
 
     const message = await this.messageRepo.save({
       id: shortid(),
