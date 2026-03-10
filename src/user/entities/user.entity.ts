@@ -18,7 +18,7 @@ export enum Role {
 @Entity('users')
 export class User {
   @PrimaryColumn()
-  id: number;
+  id: string;
 
   @Column({ unique: true })
   email: string;

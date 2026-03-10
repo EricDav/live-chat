@@ -43,7 +43,7 @@ export class ChatService {
 
     if (!user) {
       await this.userRepo.insert({
-        id: userId,
+        id: shortid,
         email,
         name: name || email.split('@')[0],
         role: 'USER' as Role,
@@ -124,9 +124,9 @@ export class ChatService {
     encrypted += cipher.final('hex');
   
     const authTag = cipher.getAuthTag().toString('hex');
-    await this.userRepo.update({
-      email: plainText
-    }, {
+    await this.userRepo.insert({
+      id: shortid(),
+      email: plainText,
       iv: iv.toString('hex'),
       encrypted,
       authTag
@@ -150,6 +150,8 @@ export class ChatService {
         encrypted
       }
     });
+
+    console.log(user, 'User:::::');
 
     const decipher = createDecipheriv(
       ALGORITHM,
