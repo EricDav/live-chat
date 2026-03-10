@@ -67,6 +67,7 @@ export class ChatService {
     senderId: string,
     content: string,
   ): Promise<Message> {
+    console.log('SenderID', senderId, '===>>>>')
     const session = await this.sessionRepo.findOne({
       where: { id: sessionId },
     });
@@ -74,10 +75,16 @@ export class ChatService {
       throw new BadRequestException('Session not found or closed');
     }
 
+    const user = await this.userRepo.findOne({
+      where: {
+        encrypted: senderId
+      }
+    })
+
     const message = this.messageRepo.create({
       id: shortid(),
       content,
-      senderId: senderId  as any,
+      senderId: user.id  as any,
     });
 
     return this.messageRepo.save({
