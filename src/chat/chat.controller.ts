@@ -9,8 +9,6 @@ import {
   Query,
 } from '@nestjs/common';
 import { ChatService } from './chat.service';
-import { CreateChatDto } from './dto/create-chat.dto';
-import { UpdateChatDto } from './dto/update-chat.dto';
 
 @Controller('/v1/chat')
 export class ChatController {
@@ -24,6 +22,11 @@ export class ChatController {
   @Get('/sessions')
   async getAllActiveSessions() {
     return this.chatService.getAllActiveSessions();
+  }
+
+  @Get('/messages')
+  async getSessionMessages(@Query() query) {
+    return this.chatService.getMessages(query)
   }
 
 }

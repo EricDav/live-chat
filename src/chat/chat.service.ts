@@ -12,6 +12,7 @@ import { Message } from './entities/message.entity';
 import * as shortid from 'shortid';
 import { randomBytes, createCipheriv, createDecipheriv, pbkdf2Sync } from 'node:crypto';
 import { config } from 'src/config';
+import { GetMessagesDto } from './dto/create-chat.dto';
 const ALGORITHM = 'aes-256-gcm';
 const KEY_LENGTH = 32;          // 256 bits
 const IV_LENGTH = 12;           // GCM recommended
@@ -186,5 +187,47 @@ export class ChatService {
     } catch(err) {
       
     }
+  }
+
+  async getMessages(dto: GetMessagesDto): Promise<{
+    messages: Message[];
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  }> {
+    const { page = 1, limit = 20, sessionId, senderId } = dto;
+
+    const queryBuilder = this.messageRepo
+      .createQueryBuilder('message')
+      .leftJoinAndSelect('message.sender', 'sender') // Load sender relation
+      .orderBy('message.createdAt', 'ASC'); // Oldest first
+
+    // Optional filters
+    if (sessionId) {
+      queryBuilder.andWhere('message.sessionId = :sessionId', { sessionId });
+    }
+
+    if (senderId) {
+      queryBuilder.andWhere('message.senderId = :senderId', { senderId });
+    }
+
+    // Pagination
+    const skip = (page - 1) * limit;
+
+    const [messages, total] = await queryBuilder
+      .skip(skip)
+      .take(limit)
+      .getManyAndCount();
+
+    const totalPages = Math.ceil(total / limit);
+
+    return {
+      messages,
+      total,
+      page,
+      limit,
+      totalPages,
+    };
   }
 }
