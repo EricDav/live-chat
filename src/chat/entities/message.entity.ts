@@ -28,7 +28,11 @@ export class Message {
   @ManyToOne(() => ChatSession, (session) => session.messages, {
     onDelete: 'CASCADE',
   })
+  @JoinColumn({ name: 'sessionId' })
   session: ChatSession;
+
+  @Column()
+  sessionId: string;
 
   @Column({ default: false })
   isRead: boolean;
