@@ -56,7 +56,7 @@ export class ChatService {
     });
 
     if (!session) {
-      await this.sessionRepo.save({ userId: user.id, id: userId });
+      session = await this.sessionRepo.save({ userId: user.id, id: userId });
     }
 
     return session;

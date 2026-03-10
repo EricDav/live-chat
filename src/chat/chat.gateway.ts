@@ -68,6 +68,9 @@ import {
         userEmail: session.user.email,
         action: 'joined',
       });
+
+        // ADD THIS LINE:
+      return { sessionId: session.id }; 
     }
   
     // @UseGuards(WsJwtGuard)
