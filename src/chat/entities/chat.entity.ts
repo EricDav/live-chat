@@ -6,6 +6,7 @@ import {
   OneToMany,
   CreateDateColumn,
   PrimaryColumn,
+  JoinColumn,
 } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
 import { Message } from './message.entity';
@@ -22,7 +23,11 @@ export class ChatSession {
   id: string;
 
   @ManyToOne(() => User, (user) => user.sessions, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'userId'})
   user: User;
+
+  @Column()
+  userId: string;
 
   @Column({ nullable: true })
   title?: string; // e.g. "Order Support #123"

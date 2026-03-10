@@ -35,7 +35,7 @@ export class ChatService {
   }
 
   async getOrCreateActiveSession(
-    userId: number,
+    userId: string,
     email: string,
     name?: string,
   ): Promise<ChatSession> {
@@ -56,8 +56,7 @@ export class ChatService {
     });
 
     if (!session) {
-      session = this.sessionRepo.create({ user });
-      await this.sessionRepo.save(session);
+      await this.sessionRepo.save({ userId: user.id, id: userId });
     }
 
     return session;
