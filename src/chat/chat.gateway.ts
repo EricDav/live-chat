@@ -84,7 +84,7 @@ import {
       console.log(client.data, 'CLIENT')
       const message = await this.chatService.createMessage(
         dto.sessionId,
-        client.data?.auth?.id || client?.auth?.id,
+        dto.senderId,
         dto.content,
       );
   
