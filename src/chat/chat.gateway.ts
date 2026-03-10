@@ -17,7 +17,19 @@ import {
 //   import { SendMessageDto } from './dto/send-message.dto';
 //   import { JoinChatDto } from './dto/join-chat.dto';
   
-  @WebSocketGateway({ cors: { origin: '*' }, namespace: '/' })
+@WebSocketGateway({
+  cors: {
+    origin: '*',                     // For testing — works on Render
+    // Better production version (replace with your actual frontend URL(s)):
+    // origin: ['https://your-frontend.onrender.com', 'http://localhost:3000'],
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: false,              // Set true only if using cookies/auth
+  },
+  path: '/socket.io/',               // Explicit path (good practice)
+  pingInterval: 25000,
+  pingTimeout: 60000,
+})
   export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     @WebSocketServer() server: Server;
   
