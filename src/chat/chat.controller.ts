@@ -19,6 +19,11 @@ export class ChatController {
     return this.chatService.encrypt(data);
   }
 
+  @Get('/users/:userId')
+  async validateUser(@Param('userId') userId) {
+    return this.chatService.validateUser(userId);
+  }
+
   @Get('/sessions')
   async getAllActiveSessions() {
     return this.chatService.getAllActiveSessions();

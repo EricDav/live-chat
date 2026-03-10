@@ -230,4 +230,20 @@ export class ChatService {
       totalPages,
     };
   }
+
+  async validateUser(userId: string) {
+    const user = await this.userRepo.findOne({
+      where: {
+        encrypted: userId
+      }
+    });
+
+    if (user) {
+      return {
+        data: user
+      }
+    }
+
+    throw new Error('Invalid userId')
+  }
 }
