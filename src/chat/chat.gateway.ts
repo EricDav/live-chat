@@ -103,9 +103,10 @@ import {
 
     async handleConnection(client: Socket) {
         try {
+          console.log(`Client connected: ${client.id}`);
           // WS Guard logic moved to middleware or per-method for simplicity
-          const token = client.handshake.auth.token;
-          if (!token) client.disconnect();
+          // const token = client.handshake.auth.token;
+          // if (!token) client.disconnect();
           // You can verify here or rely on guards per event
         } catch (e) {
           client.disconnect();
@@ -114,6 +115,7 @@ import {
     
       async handleDisconnect(client: Socket) {
         // Optional: mark user offline, broadcast if needed
+        console.log(`Client disconnected: ${client.id}`);
       }
     
     
