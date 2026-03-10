@@ -77,14 +77,14 @@ import {
     @SubscribeMessage('sendMessage')
     async handleMessage(
       @MessageBody() dto: any,
-      @ConnectedSocket() client: Socket,
+      @ConnectedSocket() client: Socket | any,
     ) {
       const user = client.data.user;
       console.log(dto, 'DTO');
-      console.log(client, 'CLIENT')
+      console.log(client.data, 'CLIENT')
       const message = await this.chatService.createMessage(
         dto.sessionId,
-        user.sub,
+        client.data.auth.id || client?.auth?.id,
         dto.content,
       );
   

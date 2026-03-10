@@ -23,7 +23,7 @@ export class Message {
   sender: User;
 
   @Column()
-  senderId: number;
+  senderId: string;
 
   @ManyToOne(() => ChatSession, (session) => session.messages, {
     onDelete: 'CASCADE',

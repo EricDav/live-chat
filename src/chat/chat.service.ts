@@ -80,7 +80,11 @@ export class ChatService {
       senderId: senderId  as any,
     });
 
-    return this.messageRepo.save(message);
+    return this.messageRepo.save({
+      id: shortid(),
+      content,
+      senderId: senderId  as any,
+    });
   }
 
   async getSessionMessages(sessionId: string): Promise<Message[]> {
